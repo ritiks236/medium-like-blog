@@ -23,7 +23,7 @@ bookRouter.use( async (c, next) => {
   
     if(!payload){
       c.status(403);
-      return c.json('unauthorizes');
+      return c.json('unauthorized');
     }
     c.set('userId', payload.id)
   
@@ -101,19 +101,24 @@ bookRouter.post('/', async(c) => {
     }
   })
   
-  bookRouter.get('/allblog', async(c) => {
+  bookRouter.get('/bulk', async(c) => {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
   
-    const userId = c.get('userId');
-  
     try{
       const blogs = await prisma.post.findMany({
-        where:{
-          authorId : userId
+        select:{
+          title: true,
+          description: true,
+          id:true,
+          author: {
+            select: {
+              name: true
+            }
+          }
         }
-      })
+      });
   
       return c.json({
         blogs : blogs
@@ -135,6 +140,16 @@ bookRouter.post('/', async(c) => {
       const blog = await prisma.post.findUnique({
         where:{
           id : id
+        },
+        select:{
+          id: true,
+          title: true,
+          description: true,
+          author:{
+            select:{
+              name: true
+            }
+          }
         }
       })
   
