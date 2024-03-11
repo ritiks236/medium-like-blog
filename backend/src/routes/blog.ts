@@ -54,11 +54,15 @@ bookRouter.post('/', async(c) => {
           title: body.title,
           description: body.description,
           authorId: userId
+        },
+        select:{
+          id: true
         }
       });
   
       return c.json({
-        message : 'Blog Created Successfully'
+        message : 'Blog Created Successfully',
+        id : blog.id
       })
     } catch(err){
       console.log(err);
