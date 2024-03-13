@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 
+
 interface BlogCardprops{
     authorName : string,
     title: string,
@@ -9,6 +10,10 @@ interface BlogCardprops{
 }
 
 export const BlogCard = ({authorName, title, content, publishedDate, id} :BlogCardprops) => {
+  
+    const newcontent = (<div id='root'dangerouslySetInnerHTML={{ __html: content }} />)
+    
+
     return(
         <Link to={`/blog/${id}`}>
         <div className="border-b border-slate-200 pt-8 max-w-screen-md cursor-pointer">
@@ -28,7 +33,9 @@ export const BlogCard = ({authorName, title, content, publishedDate, id} :BlogCa
                 {title}
             </div>
             <div className="text-md font-thin">
+                
                 {content.slice(0, 100) + "..."}
+                            
             </div>
             <div className="text-slate-500 text-sm font-thin pt-4 pb-4">
                 {`${Math.ceil(content.length/100)} min read`}

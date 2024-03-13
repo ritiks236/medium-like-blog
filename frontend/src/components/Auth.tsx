@@ -4,6 +4,7 @@ import { useState } from "react"
 import { SignupType } from "@ritiks236/common-app"
 import axios from "axios"
 import { BACKEND_URL } from "../config"
+import toast from 'react-hot-toast';
 
 
 export const Auth = ({type} : {type : "signin" | "signup"}) =>   {
@@ -21,11 +22,22 @@ export const Auth = ({type} : {type : "signin" | "signup"}) =>   {
                 email : postInputs.email,
                 password : postInputs.password
             })
+            if(type == 'signup'){
+                toast.success('Signed up');
+            } else {
+                toast.success("Logged In");
+            }
+            
             const jwt = response.data.token;
             localStorage.setItem('token', jwt);
             navigate('/blogs');
         } catch (e) {
             //alert the user request failed
+            if(type == 'signup'){
+                toast.error("Signup Failed!");
+            } else {
+                toast.error("Login Failed");
+            }
         }
         
     }
@@ -65,6 +77,7 @@ export const Auth = ({type} : {type : "signin" | "signup"}) =>   {
 
            
             <button onClick={sendRequest} type="button" className="w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ">{type === "signup" ? "Sign up" : "Sign in"}</button>
+           
             </div>
 
             </div>

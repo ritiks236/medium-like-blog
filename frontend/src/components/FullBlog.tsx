@@ -2,6 +2,8 @@ import { Blog } from "../hooks"
 import { AppBar } from "./AppBar"
 import { Avatar } from "./BlogCard"
 
+
+
 export const FullBlog = ({blog} : {blog : Blog}) => {
     return(
         <div>
@@ -16,7 +18,7 @@ export const FullBlog = ({blog} : {blog : Blog}) => {
                         Post on 2nd December 2023
                     </div>
                     <div className="pt-4">
-                        {blog.description}
+                        <div dangerouslySetInnerHTML={{ __html: blog.description }} />
                     </div>
                 </div>
                 <div className="col-span-4">
