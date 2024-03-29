@@ -11,7 +11,14 @@ interface BlogCardprops{
 
 export const BlogCard = ({authorName, title, content, publishedDate, id} :BlogCardprops) => {
   
-    const newcontent = (<div id='root'dangerouslySetInnerHTML={{ __html: content }} />)
+    
+    const richText = content;
+    const tempElement = document.createElement("div");
+    tempElement.innerHTML = richText;
+    const plainText = tempElement.textContent;
+
+
+    
     
 
     return(
@@ -33,8 +40,7 @@ export const BlogCard = ({authorName, title, content, publishedDate, id} :BlogCa
                 {title}
             </div>
             <div className="text-md font-thin">
-                
-                {content.slice(0, 100) + "..."}
+                {plainText?.slice(0, 100)}...
                             
             </div>
             <div className="text-slate-500 text-sm font-thin pt-4 pb-4">

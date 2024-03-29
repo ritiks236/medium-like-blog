@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom"
 import { useBlog } from "../hooks"
 import { FullBlog } from "../components/FullBlog";
+import { AppBar } from "../components/AppBar";
+import { FullBlogSkeleton } from "../components/FullBlogSkeleton";
 
 export const Blog = () => {
     const { id } = useParams();
@@ -10,7 +12,10 @@ export const Blog = () => {
 
 
     if(loading || !blog){
-        return <div>loading...</div>
+        return <div>
+            <AppBar />
+            <FullBlogSkeleton />
+        </div>
     }
     return (
         <div>

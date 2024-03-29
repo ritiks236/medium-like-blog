@@ -132,6 +132,23 @@ bookRouter.post('/', async(c) => {
       return c.status(404);
     }
   })
+
+  bookRouter.delete('/bulk', async(c) => {
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+  
+    try{
+      const blogs = await prisma.post.deleteMany();
+  
+      return c.json({
+        blogs : blogs
+      })
+  
+    } catch(err){
+      return c.status(404);
+    }
+  })
   
   bookRouter.get('/:id', async(c) => {
     const prisma = new PrismaClient({

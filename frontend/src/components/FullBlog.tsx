@@ -1,11 +1,13 @@
 import { Blog } from "../hooks"
 import { AppBar } from "./AppBar"
 import { Avatar } from "./BlogCard"
-
+import parse from 'html-react-parser';
 
 
 export const FullBlog = ({blog} : {blog : Blog}) => {
+    const content = parse(blog.description)
     return(
+     
         <div>
             <AppBar />
             <div className="flex justify-center pt-12">
@@ -18,7 +20,7 @@ export const FullBlog = ({blog} : {blog : Blog}) => {
                         Post on 2nd December 2023
                     </div>
                     <div className="pt-4">
-                        <div dangerouslySetInnerHTML={{ __html: blog.description }} />
+                        {content}
                     </div>
                 </div>
                 <div className="col-span-4">
